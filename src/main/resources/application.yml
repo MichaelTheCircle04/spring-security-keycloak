@@ -1,0 +1,24 @@
+server:
+    port: 8081
+spring:
+    security:
+        oauth2:
+            client: #base path
+                provider: #discribe provider
+                    keycloak:
+                        issuer-uri: http://localhost:8080/realms/projectrealm
+                        user-name-attribute: preferred_username
+                registration: #discribe client
+                    keycloak: #provider name
+                        client-id: spring-security
+                        client-secret: qoWIA7nIli42E1etWSeQHzfdLlrKUudO
+                        scope:
+                            - openid
+keycloak:
+    server-url: http://localhost:8080 
+    realm: projectrealm
+    username: admin
+    password: admin  
+logging:
+  level:
+    org.springframework.security: TRACE
