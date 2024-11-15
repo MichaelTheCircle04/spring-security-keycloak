@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version> 
     <packaging>pom</packaging>
     <modules>
-        <module>../keycloak-project</module>
+        <module>../clien-app</module>
         <module>../resource-server-app</module>
     </modules> 
     
