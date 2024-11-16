@@ -1,7 +1,7 @@
 package com.mtrifonov.client.app.controllers;
 
+import com.mtrifonov.client.app.kafka.RegistrationRequestMessageKafkaProducer;
 import com.mtrifonov.client.app.supportclasses.RegistrationRequest;
-import com.mtrifonov.client.app.supportclasses.RegistrationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,13 +19,13 @@ import org.springframework.web.client.RestClient;
 @Controller
 public class EnterController {
     
-    private final RegistrationService service;
+    private final RegistrationRequestMessageKafkaProducer registrationProducer;
     private final RestClient restClient;
 
     @Autowired
-    public EnterController(RegistrationService service, 
+    public EnterController(RegistrationRequestMessageKafkaProducer registrationProducer, 
             RestClient restClient) {
-        this.service = service;
+        this.registrationProducer = registrationProducer;
         this.restClient = restClient;
     }
     
@@ -48,7 +48,7 @@ public class EnterController {
     
     @PostMapping("/registration")
     public String registerUser(HttpServletRequest request) {
-        service.registerUser(RegistrationRequest.toRegistrationRequest(request));
+        registrationProducer.produce(RegistrationRequest.toRegistrationRequest(request));
         return "main";
     }
     

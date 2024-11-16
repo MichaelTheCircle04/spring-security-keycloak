@@ -14,11 +14,9 @@ spring:
                         client-secret: qoWIA7nIli42E1etWSeQHzfdLlrKUudO
                         scope:
                             - openid
-keycloak:
-    server-url: http://localhost:8080 
-    realm: projectrealm
-    username: admin
-    password: admin  
+spring:
+    kafka: 
+        bootstrap-servers: localhost:9092  
 logging:
   level:
     org.springframework.security: TRACE
