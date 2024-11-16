@@ -11,6 +11,7 @@
     <modules>
         <module>../client-app</module>
         <module>../resource-server-app</module>
+        <module>../keycloak-registration-service</module>
     </modules> 
     
     <properties>
