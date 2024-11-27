@@ -20,10 +20,10 @@ public class KeycloakConfig {
     @Value("${keycloak.realm}")
     private String realm;
     
-    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
+    @Value("${keycloak.client.client-id}")
     private String clientId;
     
-    @Value("${spring.security.oauth2.client.registration.keycloak.client-secret}")
+    @Value("${keycloak.client.client-secret}")
     private String clientSecret;
     
     @Value("${keycloak.username}")
