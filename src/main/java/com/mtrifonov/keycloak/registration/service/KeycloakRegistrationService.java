@@ -22,7 +22,7 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 @SpringBootApplication
 public class KeycloakRegistrationService {
 
-    @Value("${spring.kafka.bootstrap-server}")
+    @Value("${spring.kafka.bootstrap-servers}")
     private String server;
     
     public static void main(String[] args) {

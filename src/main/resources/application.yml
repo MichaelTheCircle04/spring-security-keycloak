@@ -1,13 +1,13 @@
 spring:
   kafka: 
-    bootstrap-server: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 server:
   port: 18080
 keycloak:
   server-url: ${KEYCLOAK_SERVER_URL:http://localhost:8080} 
   realm: projectrealm
-  username: ${ADMIN_USERNAME:MichaelTheCircle}
-  password: ${PASSWORD:tovihu98}
+  username: ${ADMIN_USERNAME:admin}
+  password: ${PASSWORD:password}
   client: 
     client-id: ${CLIENT_ID:spring-security}
     client-secret: ${CLIENT_SECRET:qoWIA7nIli42E1etWSeQHzfdLlrKUudO}
