@@ -1,0 +1,64 @@
+services:
+  broker-app: 
+    image: apache/kafka:3.9.0
+    container_name: broker
+    environment:
+      - 'KAFKA_NODE_ID=1'
+      - 'KAFKA_PROCESS_ROLES=broker,controller'
+      - 'KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093'
+      - 'KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://broker:9092'
+      - 'KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER'
+      - 'KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT'
+      - 'KAFKA_CONTROLLER_QUORUM_VOTERS=1@localhost:9093'
+      - 'KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1'
+      - 'KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1'
+      - 'KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1'
+      - 'KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS=0'
+      - 'KAFKA_NUM_PARTITIONS=1'
+    networks:
+        - mynet
+    restart: unless-stopped
+  client-app: 
+    build: ../client-app
+    container_name: client
+    environment:
+      - 'KAFKA_BOOTSTRAP_SERVER=broker:9092'
+      - 'RESOURCE_SERVER_URL=http://host.docker.internal:8082'
+      - 'ISSUER_URI=http://host.docker.internal:8080/realms/projectrealm'
+    ports:
+        - '8081:8081'
+    networks:
+        - mynet
+    restart: unless-stopped
+    depends_on:
+      - broker-app
+  resource-server-app: 
+    build: ../resource-server-app
+    container_name: resource-server
+    environment:
+      - 'ISSUER_URI=http://host.docker.internal:8080/realms/projectrealm'  
+      - 'JWK_SET_URI=http://host.docker.internal:8080/realms/projectrealm/protocol/openid-connect/certs'
+    ports:
+      - '8082:8082'
+    restart: unless-stopped
+  keycloak-registration-service-app: 
+      build: ../keycloak-registration-service
+      container_name: keycloak-registration-service
+      environment:
+        - 'KAFKA_BOOTSTRAP_SERVER=broker:9092'  
+        - 'KEYCLOAK_SERVER_URL=http://host.docker.internal:8080'
+        - 'ADMIN_USERNAME=MichaelTheCircle'
+        - 'PASSWORD=tovihu98'
+      ports:
+        - '18080:18080'
+      restart: unless-stopped
+      networks:
+        - mynet
+      depends_on:
+        - broker-app
+networks:
+  mynet:
+    external: true
+  default:
+    driver: bridge
+    name: basenet
