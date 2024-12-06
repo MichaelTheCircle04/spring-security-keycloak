@@ -1,11 +1,12 @@
 server:
-    port: 8082
+  port: 8082
 spring:
-    security:
-        oauth2:
-            resourceserver:
-                jwt:
-                    issuer-uri: http://localhost:8080/realms/projectrealm
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI:http://localhost:8080/realms/projectrealm}
+          jwk-set-uri: ${JWK_SET_URI:http://localhost:8080/realms/projectrealm/.well-known/openid-configuration}
 logging:
   level:
     org.springframework.security: TRACE
