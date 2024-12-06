@@ -1,22 +1,23 @@
 server:
-    port: 8081
+  port: 8081
+resource-server:
+  url: ${RESOURCE_SERVER_URL:http://localhost:8082}
 spring:
-    security:
-        oauth2:
-            client: #base path
-                provider: #discribe provider
-                    keycloak:
-                        issuer-uri: http://localhost:8080/realms/projectrealm
-                        user-name-attribute: preferred_username
-                registration: #discribe client
-                    keycloak: #provider name
-                        client-id: spring-security
-                        client-secret: qoWIA7nIli42E1etWSeQHzfdLlrKUudO
-                        scope:
-                            - openid
-spring:
-    kafka: 
-        bootstrap-servers: localhost:9092  
+  kafka: 
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+  security:
+    oauth2:
+      client: #base path
+        provider: #discribe provider
+          keycloak:
+            issuer-uri: ${ISSUER_URI:http://localhost:8080/realms/projectrealm}
+            user-name-attribute: preferred_username
+        registration: #discribe client
+          keycloak: #provider name
+            client-id: ${CLIENT_ID:spring-security}
+            client-secret: ${CLIENT_SECRET:qoWIA7nIli42E1etWSeQHzfdLlrKUudO}
+            scope:
+              - openid
 logging:
   level:
     org.springframework.security: TRACE

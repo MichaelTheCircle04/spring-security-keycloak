@@ -3,12 +3,14 @@ package com.mtrifonov.client.app.supportclasses;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @Mikhail Trifonov
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class RegistrationRequest {
     

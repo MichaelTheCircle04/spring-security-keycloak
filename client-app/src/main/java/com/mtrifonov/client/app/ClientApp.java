@@ -1,5 +1,6 @@
 package com.mtrifonov.client.app;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -19,14 +20,17 @@ import org.springframework.web.client.RestClient;
  */
 @SpringBootApplication
 public class ClientApp {
-
+    
+    @Value("${resource-server.url}")
+    private String resourceServerUrl;
+    
     public static void main(String[] args) {
         SpringApplication.run(ClientApp.class, args);
     }
     
     @Bean
     public RestClient restClient(OAuth2AuthorizedClientManager manager) {
-        return RestClient.builder().baseUrl("http://localhost:8082")
+        return RestClient.builder().baseUrl(resourceServerUrl)
                 .requestInterceptor((request, body, execution) -> {
                     if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                         var token = manager.authorize(OAuth2AuthorizeRequest
