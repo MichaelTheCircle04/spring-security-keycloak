@@ -47,8 +47,8 @@ services:
       environment:
         - 'KAFKA_BOOTSTRAP_SERVER=broker:9092'  
         - 'KEYCLOAK_SERVER_URL=http://host.docker.internal:8080'
-        - 'ADMIN_USERNAME=MichaelTheCircle'
-        - 'PASSWORD=tovihu98'
+        - 'ADMIN_USERNAME=admin'
+        - 'PASSWORD=password'
       ports:
         - '18080:18080'
       restart: unless-stopped
